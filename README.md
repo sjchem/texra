@@ -16,6 +16,21 @@ Open **http://localhost:8501** in your browser.
 
 ---
 
+## Running Locally (Without Docker)
+
+```bash
+cp .env.example .env     # Add OPENAI_API_KEY
+pip install -r requirements.txt
+
+# Terminal 1: Backend
+uvicorn app.main:app --host 0.0.0.0 --port 8000
+
+# Terminal 2: Frontend
+streamlit run streamlit_app.py --server.port 8501
+```
+
+---
+
 ## Architecture
 
 ```
@@ -141,26 +156,11 @@ streamlit_app.py         # Streamlit frontend
 
 ---
 
-## Running Locally (Without Docker)
-
-```bash
-cp .env.example .env     # Add OPENAI_API_KEY
-pip install -r requirements.txt
-
-# Terminal 1: Backend
-uvicorn app.main:app --host 0.0.0.0 --port 8000
-
-# Terminal 2: Frontend
-streamlit run streamlit_app.py --server.port 8501
-```
-
----
-
 ## Key Files
 
 | File | Purpose |
 |------|---------|
-| [PROMPTS.md](PROMPTS.md) | All AI prompts used during development |
+| [PROMPTS.md](PROMPTS.md) | All main AI prompts used during development |
 | [RETROSPECTIVE.md](RETROSPECTIVE.md) | What I'd do differently |
 | [MCP_SETUP.md](MCP_SETUP.md) | MCP server configuration guide |
 | [QUESTIONS_TO_CONSIDER.md](QUESTIONS_TO_CONSIDER.md) | Architecture decision rationale |
