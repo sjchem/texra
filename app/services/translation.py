@@ -1,12 +1,29 @@
 
 
-from openai import OpenAI
 
-client = OpenAI()
+import asyncio
+import time
+from agents import Runner
+from app.agents.translator import translator_agent
+from app.core.logging import get_logger
 
-def translate_text(text: str, target_lang: str) -> str:
-    resp = client.responses.create(
-        model="gpt-4.1-mini",
-        input=f"Translate the following text to {target_lang}:\n{text}"
+logger = get_logger("TranslatorService")
+
+_TRANSLATION_SEMAPHORE = asyncio.Semaphore(5)
+
+
+async def translate_text(text: str, target_lang: str) -> str:
+    start = time.time()
+
+    async with _TRANSLATION_SEMAPHORE:
+        result = await Runner.run(
+            translator_agent,
+            input=f"Target language: {target_lang}\n\nText:\n{text}"
+        )
+
+    logger.info(
+        f"Translation completed in {time.time() - start:.2f}s "
+        f"(chars={len(text)})"
     )
-    return resp.output_text
+
+    return result.final_output

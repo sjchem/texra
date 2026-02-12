@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "stark-translator": {
+      "comment": "STARK Translator - AI-powered document translation service",
+      "command": "python",
+      "args": ["-m", "app.mcp_server"],
+      "cwd": "/absolute/path/to/stark-translator",
+      "env": {
+        "OPENAI_API_KEY": "your-openai-api-key-here"
+      }
+    }
+  }
+}

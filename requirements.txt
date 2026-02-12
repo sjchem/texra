@@ -6,3 +6,10 @@ openai
 pymupdf
 reportlab
 openai-agents
+streamlit
+websockets
+mcp
+fastmcp
+python-docx
+odfpy
+python-pptx

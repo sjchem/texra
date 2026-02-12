@@ -7,3 +7,14 @@ services:
       - "8000:8000"
     env_file:
       - .env
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+
+  stark-translator-ui:
+    build: .
+    ports:
+      - "8501:8501"
+    env_file:
+      - .env
+    depends_on:
+      - stark-translator
+    command: streamlit run streamlit_app.py --server.port 8501 --server.address 0.0.0.0
