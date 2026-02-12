@@ -13,3 +13,4 @@ fastmcp
 python-docx
 odfpy
 python-pptx
+python-dotenv

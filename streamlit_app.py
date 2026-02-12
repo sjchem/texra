@@ -161,7 +161,7 @@ def _drain_queue():
 async def _translate_ws(file_bytes: bytes, filename: str, language: str, output_format: str, q: queue.Queue):
     """Run the WebSocket translation and push messages to *q*."""
     try:
-        uri = "ws://127.0.0.1:8000/ws/translate"
+        uri = os.environ.get("BACKEND_WS_URL", "ws://127.0.0.1:8000/ws/translate")
         async with websockets.connect(uri, max_size=50 * 1024 * 1024) as ws:
             await ws.send(json.dumps({
                 "filename": filename,
