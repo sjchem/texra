@@ -5,7 +5,7 @@ import os
 
 translator_agent = Agent(
     name="TranslatorAgent",
-    model=os.getenv("OPENAI_MODEL", "gpt-4o-mini-2024-07-18"),
+    model=os.getenv("OPENAI_MODEL", "gpt-4o-2024-11-20"),
     instructions="""
 You are a professional document translator.
 
