@@ -251,8 +251,8 @@ st.markdown(
 
         /* Custom logo */
         .stark-logo {
-            width: 80px;
-            height: 80px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
             border: 8px solid transparent;
             background: linear-gradient(#050505, #050505) padding-box,
@@ -464,8 +464,8 @@ st.markdown(
         }
 
         .welcome-logo {
-            width: 120px;
-            height: 120px;
+            width: 90px;
+            height: 90px;
             border-radius: 50%;
             border: 10px solid transparent;
             background: linear-gradient(#050505, #050505) padding-box,
