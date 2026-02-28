@@ -216,19 +216,19 @@ _drain_queue()
 # PAGE CONFIG
 # =================================================
 st.set_page_config(
-    page_title="STARK TRANSLATOR",
-    page_icon="⭕",
+    page_title="LangForge",
+    page_icon="⚡",
     layout="wide",
     initial_sidebar_state="collapsed",
 )
 
 # =================================================
-# STYLES - Stark Future Brand
+# STYLES - LangForge Brand
 # =================================================
 st.markdown(
     """
     <style>
-        /* Dark theme - Stark Future Brand */
+        /* Dark theme - LangForge Brand */
         .stApp {
             background-color: #050505;
         }
@@ -240,7 +240,7 @@ st.markdown(
         /* Sidebar styling */
         [data-testid="stSidebar"] {
             background-color: #050505;
-            border-right: 2px solid #c9a961;
+            border-right: 2px solid #00d4ff;
             padding-top: 1rem;
         }
 
@@ -250,29 +250,29 @@ st.markdown(
         }
 
         /* Custom logo */
-        .stark-logo {
+        .langforge-logo {
             width: 70px;
             height: 70px;
             border-radius: 50%;
             border: 8px solid transparent;
             background: linear-gradient(#050505, #050505) padding-box,
-                    linear-gradient(135deg, #e5c17c 0%, #c9a961 50%, #8b7355 100%) border-box;
-            box-shadow: 0 0 20px rgba(201, 169, 97, 0.3);
+                    linear-gradient(135deg, #66e8ff 0%, #00d4ff 50%, #0099cc 100%) border-box;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
             margin: 5px auto 10px auto;
         }
 
-        .stark-title {
+        .langforge-title {
             font-size: 32px;
             font-weight: 700;
             letter-spacing: 3px;
-            background: linear-gradient(135deg, #d4af37 0%, #c9a961 50%, #8b7355 100%);
+            background: linear-gradient(135deg, #66e8ff 0%, #00d4ff 50%, #0099cc 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             text-align: center;
             margin-bottom: 15px;
             margin-top: 0;
-            text-shadow: 0 2px 10px rgba(201, 169, 97, 0.2);
+            text-shadow: 0 2px 10px rgba(0, 212, 255, 0.3);
         }
 
         /* Main area title */
@@ -280,18 +280,18 @@ st.markdown(
             font-size: 36px;
             font-weight: 700;
             letter-spacing: 6px;
-            background: linear-gradient(135deg, #d4af37 0%, #c9a961 50%, #8b7355 100%);
+            background: linear-gradient(135deg, #66e8ff 0%, #00d4ff 50%, #0099cc 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-bottom: 20px;
-            text-shadow: 0 2px 10px rgba(201, 169, 97, 0.2);
+            text-shadow: 0 2px 10px rgba(0, 212, 255, 0.3);
         }
 
         /* Asset category cards */
         .asset-card {
             background: #0a0a0a;
-            border: 2px solid #c9a961;
+            border: 2px solid #00d4ff;
             border-radius: 12px;
             padding: 40px 30px;
             text-align: center;
@@ -301,8 +301,8 @@ st.markdown(
         }
 
         .asset-card:hover {
-            border-color: #d4af37;
-            box-shadow: 0 0 30px rgba(201, 169, 97, 0.3);
+            border-color: #33ddff;
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.4);
             transform: translateY(-5px);
         }
 
@@ -310,7 +310,7 @@ st.markdown(
             font-size: 20px;
             font-weight: 700;
             letter-spacing: 2px;
-            color: #c9a961;
+            color: #00d4ff;
             margin-bottom: 25px;
             text-transform: uppercase;
         }
@@ -354,7 +354,7 @@ st.markdown(
 
         /* Button styling */
         .stButton>button {
-            background: #c9a961;
+            background: #00d4ff;
             color: #050505;
             font-weight: 700;
             border: none;
@@ -367,8 +367,8 @@ st.markdown(
         }
 
         .stButton>button:hover {
-            background: #d4af37;
-            box-shadow: 0 0 25px rgba(201, 169, 97, 0.5);
+            background: #33ddff;
+            box-shadow: 0 0 25px rgba(0, 212, 255, 0.6);
             transform: translateY(-2px);
         }
 
@@ -379,7 +379,7 @@ st.markdown(
 
         /* Download button */
         .stDownloadButton>button {
-            background: #c9a961;
+            background: #00d4ff;
             color: #050505;
             font-weight: 700;
             border: none;
@@ -390,8 +390,8 @@ st.markdown(
         }
 
         .stDownloadButton>button:hover {
-            background: #d4af37;
-            box-shadow: 0 0 20px rgba(201, 169, 97, 0.4);
+            background: #33ddff;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
         }
 
         /* Text and labels */
@@ -401,12 +401,12 @@ st.markdown(
 
         /* Progress bar */
         .stProgress > div > div {
-            background-color: #c9a961;
+            background-color: #00d4ff;
         }
 
         /* File uploader */
         .stFileUploader {
-            border: 2px solid #c9a961;
+            border: 2px solid #00d4ff;
             border-radius: 8px;
             padding: 15px;
             background-color: #0a0a0a;
@@ -416,13 +416,13 @@ st.markdown(
         /* Select box */
         .stSelectbox > div > div {
             background-color: #0a0a0a;
-            border: 1px solid #c9a961;
+            border: 1px solid #00d4ff;
             color: #e0e0e0;
         }
 
         /* Preview container */
         .preview-container {
-            border: 2px solid #c9a961;
+            border: 2px solid #00d4ff;
             border-radius: 8px;
             padding: 20px;
             background-color: #0a0a0a;
@@ -434,7 +434,7 @@ st.markdown(
         .preview-title {
             font-size: 18px;
             font-weight: 700;
-            color: #c9a961;
+            color: #00d4ff;
             margin-bottom: 15px;
             letter-spacing: 2px;
             text-transform: uppercase;
@@ -443,7 +443,7 @@ st.markdown(
         /* Info box */
         .stAlert {
             background-color: #0a0a0a;
-            border: 2px solid #c9a961;
+            border: 2px solid #00d4ff;
             color: #e0e0e0;
         }
 
@@ -469,8 +469,8 @@ st.markdown(
             border-radius: 50%;
             border: 10px solid transparent;
             background: linear-gradient(#050505, #050505) padding-box,
-                    linear-gradient(135deg, #e5c17c 0%, #c9a961 50%, #8b7355 100%) border-box;
-            box-shadow: 0 0 30px rgba(201, 169, 97, 0.5);
+                    linear-gradient(135deg, #66e8ff 0%, #00d4ff 50%, #0099cc 100%) border-box;
+            box-shadow: 0 0 40px rgba(0, 212, 255, 0.6);
             margin: 0 auto 30px auto;
         }
 
@@ -478,13 +478,13 @@ st.markdown(
             font-size: 48px;
             font-weight: 700;
             letter-spacing: 8px;
-            background: linear-gradient(135deg, #d4af37 0%, #c9a961 50%, #8b7355 100%);
+            background: linear-gradient(135deg, #66e8ff 0%, #00d4ff 50%, #0099cc 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             text-align: center;
             margin-bottom: 60px;
-            text-shadow: 0 2px 10px rgba(201, 169, 97, 0.2);
+            text-shadow: 0 2px 10px rgba(0, 212, 255, 0.3);
         }
 
         /* Clickable cards */
@@ -504,8 +504,8 @@ if st.session_state.workflow_started:
         # Stark logo
         st.markdown(
             """
-            <div class="stark-logo"></div>
-            <h1 class="stark-title">STARK TRANSLATOR</h1>
+            <div class="langforge-logo"></div>
+            <h1 class="langforge-title">LANGFORGE</h1>
             """,
             unsafe_allow_html=True
         )
@@ -601,7 +601,7 @@ if not st.session_state.workflow_started:
     st.markdown(
         """
         <div class="welcome-logo"></div>
-        <h1 class="welcome-title">STARK TRANSLATOR</h1>
+        <h1 class="welcome-title">LANGFORGE</h1>
         """,
         unsafe_allow_html=True
     )
@@ -677,7 +677,7 @@ else:
     # Header with title and back button
     header_col1, header_col2, header_col3 = st.columns([2, 1, 1])
     with header_col1:
-        st.markdown('<h1 class="main-title">STARK TRANSLATOR</h1>', unsafe_allow_html=True)
+        st.markdown('<h1 class="main-title">LANGFORGE</h1>', unsafe_allow_html=True)
     with header_col3:
         if st.button("⬅️ BACK TO HOME", key="back_top", use_container_width=True):
             st.session_state.workflow_started = False
@@ -886,7 +886,7 @@ else:
 
                 # Display validation header
                 st.markdown(
-                    f'<div style="text-align: center; margin-bottom: 20px;"><h2 style="color: #d4af37; font-size: 28px; letter-spacing: 2px;">📊 QUALITY VALIDATION REPORT</h2></div>',
+                    f'<div style="text-align: center; margin-bottom: 20px;"><h2 style="color: #00d4ff; font-size: 28px; letter-spacing: 2px;">📊 QUALITY VALIDATION REPORT</h2></div>',
                     unsafe_allow_html=True
                 )
 
@@ -896,7 +896,7 @@ else:
                 with metric_col1:
                     st.markdown(
                         f"""
-                        <div style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(0, 0, 0, 0.3));
+                        <div style="background: linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(0, 0, 0, 0.3));
                                     border: 2px solid {color}; border-radius: 15px; padding: 25px; text-align: center;
                                     min-height: 260px; height: 260px; display: flex; flex-direction: column; justify-content: center;">
                             <div style="font-size: 48px; margin-bottom: 10px;">{icon}</div>
@@ -911,12 +911,12 @@ else:
                 with metric_col2:
                     st.markdown(
                         f"""
-                        <div style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(0, 0, 0, 0.3));
-                                    border: 2px solid #d4af37; border-radius: 15px; padding: 25px; text-align: center;
+                        <div style="background: linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(0, 0, 0, 0.3));
+                                    border: 2px solid #00d4ff; border-radius: 15px; padding: 25px; text-align: center;
                                     min-height: 260px; height: 260px; display: flex; flex-direction: column; justify-content: center;">
-                            <div style="color: #d4af37; font-size: 14px; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 1px;">Total Issues</div>
+                            <div style="color: #00d4ff; font-size: 14px; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 1px;">Total Issues</div>
                             <div style="color: white; font-size: 48px; font-weight: bold; margin-bottom: 10px;">{total_issues}</div>
-                            <div style="color: #d4af37; font-size: 14px; text-transform: uppercase; margin-bottom: 5px; letter-spacing: 1px;">High Severity</div>
+                            <div style="color: #00d4ff; font-size: 14px; text-transform: uppercase; margin-bottom: 5px; letter-spacing: 1px;">High Severity</div>
                             <div style="color: {'#F44336' if high_severity > 0 else '#4CAF50'}; font-size: 32px; font-weight: bold;">{high_severity}</div>
                         </div>
                         """,
@@ -928,10 +928,10 @@ else:
                     rec_icon = "✅" if recommendation == "pass" else "⚠️" if recommendation == "review" else "❌"
                     st.markdown(
                         f"""
-                        <div style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(0, 0, 0, 0.3));
+                        <div style="background: linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(0, 0, 0, 0.3));
                                     border: 2px solid {rec_color}; border-radius: 15px; padding: 25px; text-align: center;
                                     min-height: 260px; height: 260px; display: flex; flex-direction: column; justify-content: center;">
-                            <div style="color: #d4af37; font-size: 14px; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 1px;">Recommendation</div>
+                            <div style="color: #00d4ff; font-size: 14px; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 1px;">Recommendation</div>
                             <div style="font-size: 64px; margin: 20px 0;">{rec_icon}</div>
                             <div style="color: {rec_color}; font-size: 24px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px;">{recommendation}</div>
                             <div style="color: #888; font-size: 12px; margin-top: 10px;">Based on {validation.get('chunks_validated', 0)} samples</div>
