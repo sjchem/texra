@@ -1,167 +1,160 @@
-# ⭕ STARK TRANSLATOR
+# Texra
 
-AI-powered document translation service built with **FastAPI**, **OpenAI Agents SDK**, and **Streamlit**.
+**AI-powered document translation for teams.**
 
----
+Texra is an early-stage SaaS platform for translating business documents while preserving their structure, layout, and visual identity. The product is being built for teams that need dependable multilingual content without rebuilding every PDF, Word document, or presentation by hand.
 
-## Quick Start
+> Texra is currently in active development. This repository contains the working product prototype and is not yet a production-ready hosted service.
+
+## What Texra does
+
+Texra combines document parsing, AI translation, quality validation, and format-aware output generation in one workflow:
+
+- Translates PDF, DOCX, PPTX, ODT, TXT, and image files
+- Preserves document formatting, images, styles, tables, and slide layouts where supported
+- Extracts and translates text from scans and images with OCR
+- Processes large documents with context-aware chunking and bounded concurrency
+- Validates translation quality for accuracy, completeness, fluency, and terminology
+- Shows live translation progress and side-by-side document previews
+- Produces downloadable PDF, DOCX, or PPTX output, depending on the source format
+- Exposes translation capabilities through an optional MCP server
+
+The current web interface supports translation into Spanish, French, English, Portuguese, Italian, German, Chinese, and Japanese.
+
+## Product vision
+
+Texra is evolving from a translation prototype into a multi-tenant SaaS product. The goal is to give companies a secure workspace where they can translate, review, manage, and reuse multilingual documents at scale.
+
+Planned product areas include:
+
+- User accounts, organizations, and team workspaces
+- Subscription plans, usage limits, and billing
+- Secure cloud storage and translation history
+- Shared terminology, glossaries, and brand-language rules
+- Human review and approval workflows
+- Usage analytics, audit logs, and administrative controls
+- Public API access and third-party integrations
+- Production-grade job queues, monitoring, and deployment
+
+## How it works
+
+```text
+Browser (Streamlit)
+        |
+        | WebSocket
+        v
+FastAPI backend
+        |
+        v
+Translation orchestrator
+        |-- Detects and routes the document format
+        |-- Extracts text and document structure
+        |-- Translates chunks concurrently
+        |-- Validates translation quality
+        `-- Rebuilds the requested output file
+```
+
+Texra uses format-specific services for PDF, DOCX, PPTX, text, and image workflows. This keeps document handling deterministic while reserving AI models for translation, OCR, and quality evaluation.
+
+## Technology
+
+- Python
+- FastAPI and WebSockets
+- Streamlit
+- OpenAI Agents SDK and OpenAI models
+- PyMuPDF and ReportLab
+- python-docx, python-pptx, and odfpy
+- Docker and Docker Compose
+- Model Context Protocol (MCP)
+
+## Run with Docker
+
+### Requirements
+
+- Docker with Docker Compose
+- An OpenAI API key
+
+### Setup
 
 ```bash
-git clone <repo-url> && cd stark-translator
-cp .env.example .env        # Add your OPENAI_API_KEY
+git clone <repository-url>
+cd texra
+cp .env.example .env
+```
+
+Add your API key to `.env`:
+
+```env
+OPENAI_API_KEY=your_openai_api_key
+```
+
+Build and start the application:
+
+```bash
 docker compose up --build
 ```
 
-Open **http://localhost:8501** in your browser.
+Open [http://localhost:8501](http://localhost:8501) to use the web application. The API health endpoint is available at [http://localhost:8000/health](http://localhost:8000/health).
 
----
+## Run locally
 
-## Running Locally (Without Docker)
+Python 3.11 or newer is recommended.
 
 ```bash
-cp .env.example .env     # Add OPENAI_API_KEY
+python -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
+cp .env.example .env
+```
 
-# Terminal 1: Backend
+After adding `OPENAI_API_KEY` to `.env`, start the backend:
+
+```bash
 uvicorn app.main:app --host 0.0.0.0 --port 8000
+```
 
-# Terminal 2: Frontend
+In another terminal, start the frontend:
+
+```bash
 streamlit run streamlit_app.py --server.port 8501
 ```
 
----
+## MCP server
 
-## Architecture
+Texra also includes an MCP server for document translation, text translation, and translation-quality validation:
 
-```
-Browser (Streamlit :8501)
-    │  WebSocket
-    ▼
-FastAPI Backend (:8000)
-    │
-    ▼
-TranslationOrchestrator
-    ├── Format Routing
-    │   ├── PDF  → PdfFormattingService (layout-preserving)
-    │   ├── DOCX → DocxTranslationService (style-preserving)
-    │   ├── PPTX → PptxTranslationService (slide-preserving)
-    │   ├── Images → OCR (GPT-4o Vision) → PDF
-    │   └── ODT/TXT → Standard workflow → PDF
-    │
-    ├── Size Detection (threshold: 40K chars)
-    │   ├── Small docs → parallel chunk translation
-    │   └── Large docs → smart chunking + context overlap
-    │
-    ├── TranslatorAgent (gpt-4o-mini) — faithful translation
-    ├── ValidatorAgent  (gpt-4o-mini) — quality scoring
-    └── Format-specific Writers → output file
-```
-
-### Why This Architecture?
-
-| Decision | Reasoning |
-|----------|-----------|
-| **Multi-agent** (Translator + Validator) | Single-responsibility: one agent translates, another validates. Clean handoff, independent prompt tuning. |
-| **Orchestrator pattern** | Deterministic routing stays in Python (no LLM needed to pick a file format). LLMs only do what requires reasoning. |
-| **Format-specific loaders/writers** | Each format (DOCX, PPTX, PDF) has unique structure. Dedicated handlers preserve formatting without cross-format complexity. |
-| **Async parallel translation** | Chunks translate concurrently via `asyncio.gather` with semaphore-bounded concurrency (5). Preserves order, avoids rate limits. |
-| **Smart chunking with overlap** | 200-token overlap between chunks prevents coherence loss at boundaries. Semantic splitting never breaks mid-sentence. |
-| **gpt-4o-mini** | Cost-effective for translation tasks. Sufficient quality for most languages; budget-conscious per assessment guidance. |
-
----
-
-## Features
-
-| Feature | Details |
-|---------|---------|
-| **Supported formats** | PDF, DOCX, PPTX, ODT, TXT, PNG, JPG, JPEG, WEBP, GIF |
-| **Formatting preservation** | PDF (layout, images, fonts, colors), DOCX (styles, tables, images), PPTX (slides, shapes, formatting) |
-| **OCR** | Scanned PDFs and images via GPT-4o Vision |
-| **Large documents** | Smart chunking with context overlap — no practical size limit |
-| **Output format choice** | DOCX→DOCX/PDF, PPTX→PPTX/PDF, PDF→PDF |
-| **8 target languages** | Spanish, French, English, Portuguese, Italian, German, Chinese, Japanese |
-| **Quality validation** | Sample-based scoring (Accuracy, Completeness, Fluency, Terminology) with retry |
-| **Real-time progress** | WebSocket-based progress bar with percentage updates |
-| **Side-by-side preview** | Original and translated documents displayed together |
-| **MCP server** | Use from Cursor/Claude Desktop — translate files, text, or validate quality |
-| **Observability** | Trace IDs, per-agent timing, chunk-level metrics |
-
----
-
-## Testing Guide
-
-### 1. PDF Translation (Core Feature)
-1. Upload any PDF → select target language → click **TRANSLATE**
-2. Verify: progress bar updates, translated PDF appears in preview, download works
-3. Check translated PDF has justified text and readable formatting
-
-### 2. DOCX Translation with Image Preservation
-1. Upload a DOCX containing images and formatted text
-2. Select output format: **DOCX (preserve formatting)** or **PDF**
-3. Verify: images are preserved, styles maintained, download in chosen format
-
-### 3. PPTX Translation
-1. Upload a PowerPoint file
-2. Select output format: **PPTX** or **PDF**
-3. Verify: slide layouts and text formatting preserved
-
-### 4. Image OCR + Translation
-1. Upload a PNG/JPG with text content
-2. Verify: text is extracted via OCR and translated to PDF
-
-### 5. Large Document Handling
-1. Upload a document > 20 pages
-2. Verify: progress updates incrementally, translation completes without timeout
-
-### 6. Quality Validation
-1. After any translation completes, check the **Quality Validation Report** below the preview
-2. Verify: quality score, issue count, and recommendation (pass/review/retranslate) displayed
-
-### 7. Side-by-Side Preview
-1. After translation, verify both **Original** and **Translated** panels render correctly
-
-### 8. MCP Server (Optional)
 ```bash
 python -m app.mcp_server
 ```
-Configure in Cursor/Claude Desktop per [MCP_SETUP.md](MCP_SETUP.md). Test: *"Translate my document to Spanish using stark-translator"*
 
----
+See [MCP_SETUP.md](MCP_SETUP.md) for configuration details.
 
-## Project Structure
+## Project structure
 
-```
+```text
 app/
-├── main.py              # FastAPI + WebSocket endpoint
-├── orchestrator.py      # Central routing & workflow control
-├── mcp_server.py        # MCP server (3 tools, 2 resources)
-├── agents/
-│   ├── translator.py    # TranslatorAgent (gpt-4o-mini)
-│   └── validator.py     # ValidatorAgent (gpt-4o-mini)
-├── services/
-│   ├── pdf_formatter.py # PDF translation with layout preservation
-│   ├── docx_*.py        # DOCX loader/writer/translation
-│   ├── pptx_*.py        # PPTX loader/writer/translation
-│   ├── chunker.py       # Smart chunking with overlap
-│   ├── large_doc_translation.py
-│   ├── ocr.py           # GPT-4o Vision OCR
-│   ├── writer.py        # PDF/DOCX output writers
-│   └── validation.py    # Quality validation adapter
-├── core/
-│   ├── logging.py       # Structured logging with trace IDs
-│   └── exceptions.py    # Custom exceptions
-└── models/              # Request/response models
-streamlit_app.py         # Streamlit frontend
+|-- agents/                 # Translation and validation agents
+|-- core/                   # Configuration, logging, and exceptions
+|-- models/                 # Request and response models
+|-- services/               # Format processing, OCR, translation, and output
+|-- main.py                 # FastAPI and WebSocket backend
+|-- mcp_server.py           # MCP tools and resources
+`-- orchestrator.py         # Translation workflow and format routing
+
+streamlit_app.py            # Web interface
+docker-compose.yml          # Local multi-service environment
+Dockerfile                  # Application image
+requirements.txt            # Python dependencies
 ```
 
----
+## Development status
 
-## Key Files
+The repository currently represents Texra's application prototype. Before operating it as a public SaaS platform, the project still needs production authentication, tenant isolation, billing, persistent storage, background job infrastructure, rate limiting, security hardening, observability, and deployment automation.
 
-| File | Purpose |
-|------|---------|
-| [PROMPTS.md](PROMPTS.md) | All main AI prompts used during development |
-| [RETROSPECTIVE.md](RETROSPECTIVE.md) | What I'd do differently |
-| [MCP_SETUP.md](MCP_SETUP.md) | MCP server configuration guide |
-| [QUESTIONS_TO_CONSIDER.md](QUESTIONS_TO_CONSIDER.md) | Architecture decision rationale |
-| [.env.example](.env.example) | Environment variable template |
+## Contributing
+
+Texra is under active development. If you want to contribute, open an issue describing the proposed change before submitting a pull request.
+
+## License
+
+No license has been added yet. Until one is provided, all rights are reserved.
