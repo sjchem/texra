@@ -2,7 +2,7 @@
 
 **AI-powered document translation for teams.**
 
-Texra is an early-stage SaaS platform for translating business documents while preserving their structure, layout, and visual identity. The product is being built for teams that need dependable multilingual content without rebuilding every PDF, Word document, or presentation by hand.
+Texra is an early-stage SaaS platform for translating business documents while preserving their structure, layout, and visual identity. The product is being built for teams that need dependable multilingual workflows without rebuilding files manually after translation.
 
 > Texra is currently in active development. This repository contains the working product prototype and is not yet a production-ready hosted service.
 
@@ -149,7 +149,7 @@ requirements.txt            # Python dependencies
 
 ## Development status
 
-The repository currently represents Texra's application prototype. Before operating it as a public SaaS platform, the project still needs production authentication, tenant isolation, billing, persistent storage, background job infrastructure, rate limiting, security hardening, observability, and deployment automation.
+The repository currently represents Texra's application prototype. Before operating it as a public SaaS platform, the project still needs production authentication, tenant isolation, billing, persistent storage, hardened security controls, and reliability engineering.
 
 ## Contributing
 
@@ -157,4 +157,4 @@ Texra is under active development. If you want to contribute, open an issue desc
 
 ## License
 
-No license has been added yet. Until one is provided, all rights are reserved.
+This project is licensed under the Apache License 2.0. See the [LICENSE](./LICENSE) file for details.
